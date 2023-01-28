@@ -1,5 +1,4 @@
 import storage from 'src/services/storage';
-import profileRoutes from 'src/modules/app/modules/profile/router';
 
 export default [
   {
@@ -8,10 +7,8 @@ export default [
     children: [
       {
         path: '',
-        redirect: '/app/profile',
+        component: () => import('../pages/app.vue'),
       },
-      // modules
-      ...profileRoutes,
     ],
 
     beforeEnter: (to, from, next) => {

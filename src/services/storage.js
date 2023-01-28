@@ -1,5 +1,9 @@
 import { LocalStorage } from 'quasar';
-import { APP_TOKEN_KEY, APP_PROFILE_KEY } from 'src/configs/storage';
+import {
+  APP_TOKEN_KEY,
+  APP_REFRESH_TOKEN_KEY,
+  APP_PROFILE_KEY,
+} from 'src/configs/storage';
 
 export default {
   setToken(data) {
@@ -9,14 +13,31 @@ export default {
     }
   },
 
+  getToken() {
+    const key = APP_TOKEN_KEY;
+    return LocalStorage.getItem(key);
+  },
+
   removeToken() {
     const key = APP_TOKEN_KEY;
     LocalStorage.remove(key);
   },
 
-  getToken() {
-    const key = APP_TOKEN_KEY;
+  setRefreshToken(data) {
+    const key = APP_REFRESH_TOKEN_KEY;
+    if (data) {
+      LocalStorage.set(key, data);
+    }
+  },
+
+  getRefreshToken() {
+    const key = APP_REFRESH_TOKEN_KEY;
     return LocalStorage.getItem(key);
+  },
+
+  removeRefreshToken() {
+    const key = APP_REFRESH_TOKEN_KEY;
+    LocalStorage.remove(key);
   },
 
   setProfile(data) {
@@ -39,5 +60,6 @@ export default {
   removeUser() {
     this.removeProfile();
     this.removeToken();
+    this.removeRefreshToken();
   },
 };

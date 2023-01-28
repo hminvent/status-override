@@ -19,7 +19,7 @@
             <q-card-section>
               <q-input
                 outlined
-                v-model="email"
+                v-model="loginForm.email"
                 type="email"
                 :label-slot="true"
                 class="q-mb-lg"
@@ -30,7 +30,7 @@
               </q-input>
               <q-input
                 outlined
-                v-model="password"
+                v-model="loginForm.password"
                 :type="isPwd ? 'password' : 'text'"
                 :label-slot="true"
               >
@@ -67,18 +67,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useAuthStore } from '../store';
-import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
-const { email, password } = storeToRefs(authStore);
 const { login } = authStore;
+
+const loginForm = reactive({
+  email: '',
+  password: '',
+});
 
 const isPwd = ref(true);
 
 const submit = () => {
-  login(email.value, password.value);
+  const { email, password } = loginForm;
+  login(email, password);
 };
 </script>
 <style lang="scss">

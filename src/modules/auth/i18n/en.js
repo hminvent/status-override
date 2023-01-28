@@ -5,4 +5,7 @@ export default {
   errors: {
     login: 'Invalid email or password',
   },
+  success: {
+    login: 'Logged in successfully',
+  },
 };
