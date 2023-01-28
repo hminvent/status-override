@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
-import { useI18n } from 'vue-i18n';
+// import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import storage from 'src/services/storage';
@@ -9,7 +9,7 @@ import { timeOutLoader } from 'src/boot/plugins/loading';
 
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
-  const { t } = useI18n();
+  // const { t } = useI18n();
 
   async function login(email, password) {
     try {
@@ -17,9 +17,9 @@ export const useAuthStore = defineStore('auth', () => {
       storage.setToken(response.data.jwtToken);
       storage.setRefreshToken(response.data.refreshToken);
       getProfile();
-      notify('success', t('auth.success.login'));
+      // notify('success', t('auth.success.login'));
     } catch {
-      notify('error', t('auth.errors.login'));
+      // notify('error', t('auth.errors.login'));
     }
   }
 
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
       storage.removeUser();
       router.push('/auth/login');
     } catch {
-      notify('error', t('global.errors.get'));
+      // notify('error', t('global.errors.get'));
     }
   }
 
@@ -64,7 +64,7 @@ export const useAuthStore = defineStore('auth', () => {
       // storage.setProfile(response.data);
       router.push('/app');
     } catch {
-      notify('error', t('auth.errors.login'));
+      // notify('error', t('auth.errors.login'));
     }
   }
   return { login, logout, refreshToken };
