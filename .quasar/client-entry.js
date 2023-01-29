@@ -51,7 +51,7 @@ console.info('[Quasar] Running SPA.')
 
 
 
-const publicPath = `/`
+const publicPath = `/statusOverride/`
 
 async function start ({
   app,

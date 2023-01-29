@@ -9,6 +9,7 @@ export const useAppStore = defineStore('app', () => {
   const title = ref(null);
   const profilePicture = ref(null);
   const currentStatus = ref(null);
+  const toggleValue = ref(null);
   const AllStatus = ref(null);
 
   const getManagerProfileByEmail = async (email) => {
@@ -19,6 +20,7 @@ export const useAppStore = defineStore('app', () => {
       fullName.value = employee.fullName;
       title.value = employee.title;
       profilePicture.value = employee.attachment.filePath;
+      toggleValue.value = employee.getProfileStatusFromExchange;
       currentStatus.value = employeeCurrentStatus.id;
       AllStatus.value = statusObject.filter((status) => !status.dimmed);
       return Promise.resolve(response.data);
@@ -59,6 +61,7 @@ export const useAppStore = defineStore('app', () => {
     title,
     profilePicture,
     currentStatus,
+    toggleValue,
     AllStatus,
     getManagerProfileByEmail,
     updateManagerProfileStatusByEmail,

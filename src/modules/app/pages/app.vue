@@ -4,12 +4,12 @@
       <q-toolbar class="flex justify-between q-ml-sm q-mb-md">
         <img
           class="q-mt-md"
-          src="/images/mersvo-logo.png"
+          src="/statusOverride/images/mersvo-logo.png"
           width="91"
           height="40"
           alt="logo"
         />
-        <q-toggle class="toggle-status" v-model="toggleStatus" />
+        <q-toggle class="toggle-status" v-model="toggleValue" />
       </q-toolbar>
       <div class="profile-container">
         <div class="profile-img-wrapper flex flex-center">
@@ -43,7 +43,7 @@
                   :name="status.id"
                   :icon="statusIcon(status.id)"
                   :label="status.name"
-                  :disable="toggleStatus"
+                  :disable="toggleValue"
                   no-caps
                 />
               </q-tabs>
@@ -56,7 +56,7 @@
               class="change-btn text-white"
               @click="handleChange"
               label="Change"
-              :disable="toggleStatus"
+              :disable="toggleValue"
             />
           </q-card-actions>
         </q-card>
@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { colors, imageShadows } from 'src/services/static-lookups';
 import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
@@ -75,15 +75,20 @@ import { notify } from 'src/boot/plugins/notify';
 import storage from 'src/services/storage';
 
 const appStore = useAppStore();
-const { profileId, fullName, title, profilePicture, currentStatus, AllStatus } =
-  storeToRefs(appStore);
+const {
+  profileId,
+  fullName,
+  title,
+  profilePicture,
+  currentStatus,
+  toggleValue,
+  AllStatus,
+} = storeToRefs(appStore);
 const {
   getManagerProfileByEmail,
   updateManagerProfileStatusByEmail,
   updateGetProfileStatusFromExchange,
 } = appStore;
-
-const toggleStatus = ref(false);
 
 const imageStyle = computed(() => {
   const activePrimaryShadow = getCssVar(colors[currentStatus.value ?? 4]);
@@ -109,7 +114,7 @@ const statusIcon = (statusId) => {
     4: 'sun-umbrella.svg',
   };
 
-  return `img:/images/icons/${obj[statusId]}`;
+  return `img:/statusOverride/images/icons/${obj[statusId]}`;
 };
 
 const handleChange = () => {
@@ -121,12 +126,12 @@ const handleChange = () => {
 };
 
 watch(
-  () => toggleStatus.value,
+  () => toggleValue.value,
   (val) => {
     if (val) {
       currentStatus.value = null;
     }
-    updateGetProfileStatusFromExchange(profileId.value, !toggleStatus.value);
+    updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
   }
 );
 

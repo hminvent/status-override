@@ -63,7 +63,7 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '',
+      publicPath: '/statusOverride',
       // analyze: true,
       env: require('dotenv').config().parsed,
       // env: {},

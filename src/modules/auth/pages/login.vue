@@ -2,7 +2,7 @@
   <q-layout class="login-layout" view="lhh LpR lff">
     <q-header reveal class="login-header">
       <q-toolbar class="q-mt-lg q-ml-lg q-mb-md">
-        <img src="/images/mersvo-logo.png" />
+        <img src="/statusOverride/images/mersvo-logo.png" />
       </q-toolbar>
     </q-header>
 
