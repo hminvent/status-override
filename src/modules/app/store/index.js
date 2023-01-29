@@ -48,7 +48,6 @@ export const useAppStore = defineStore('app', () => {
         profileId,
         toggleValue
       );
-      notify('success', 'status updated');
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
