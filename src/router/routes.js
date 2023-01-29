@@ -1,5 +1,6 @@
 import appRoutes from 'src/modules/app/router';
 import authRoutes from 'src/modules/auth/router';
+import { DEFAULT_ROUTE } from 'src/configs/router';
 
 const routes = [
   {
@@ -9,7 +10,7 @@ const routes = [
       // default
       {
         path: '',
-        redirect: '/app',
+        redirect: DEFAULT_ROUTE,
       },
       // modules
       ...appRoutes,

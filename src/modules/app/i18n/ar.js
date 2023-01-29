@@ -1,3 +1,1 @@
-export default {
-  home: 'الرئيسية',
-};
+export default {};

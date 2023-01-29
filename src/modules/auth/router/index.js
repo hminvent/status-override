@@ -1,4 +1,5 @@
 import storage from 'src/services/storage';
+import { DEFAULT_ROUTE } from 'src/configs/router';
 
 export default [
   {
@@ -20,7 +21,7 @@ export default [
       const isAuthenticated = storage.getToken() !== null;
 
       if (to.path.includes('/auth') && isAuthenticated) {
-        next({ path: '/app' });
+        next({ path: DEFAULT_ROUTE });
       } else {
         next();
       }

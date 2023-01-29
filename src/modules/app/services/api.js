@@ -9,6 +9,6 @@ export default {
     ),
   updateGetProfileStatusFromExchange: (profileId, toggleValue) =>
     api.post(
-      `${profileId}/UpdateGetProfileStatusFromExchange?GetProfileStatusFromExchange=${toggleValue}`
+      `ProfileStatus/${profileId}/UpdateGetProfileStatusFromExchange?GetProfileStatusFromExchange=${toggleValue}`
     ),
 };

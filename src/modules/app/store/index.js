@@ -1,25 +1,26 @@
 import api from '../services/api';
 import { defineStore } from 'pinia';
-import { ref, reactive } from 'vue';
+import { notify } from 'src/boot/plugins/notify';
+import { ref } from 'vue';
 
 export const useAppStore = defineStore('app', () => {
-  const managerProfileId = ref(null);
-  const managerFullName = ref(null);
-  const managerTitle = ref(null);
-  const managerProfilePicture = ref(null);
-  const mangerActiveStatus = ref(null);
-  const managerStatus = ref(null);
+  const profileId = ref(null);
+  const fullName = ref(null);
+  const title = ref(null);
+  const profilePicture = ref(null);
+  const currentStatus = ref(null);
+  const AllStatus = ref(null);
 
   const getManagerProfileByEmail = async (email) => {
     try {
       const response = await api.getManagerProfileByEmail(email);
-      const { employee, statusObject } = response.data;
-      managerProfileId.value = employee.id;
-      managerFullName.value = employee.fullName;
-      managerTitle.value = employee.title;
-      managerProfilePicture.value = employee.attachment.filePath;
-      mangerActiveStatus.value = employee.profileTypeId;
-      managerStatus.value = statusObject.filter((status) => !status.dimmed);
+      const { employee, statusObject, employeeCurrentStatus } = response.data;
+      profileId.value = employee.id;
+      fullName.value = employee.fullName;
+      title.value = employee.title;
+      profilePicture.value = employee.attachment.filePath;
+      currentStatus.value = employeeCurrentStatus.id;
+      AllStatus.value = statusObject.filter((status) => !status.dimmed);
       return Promise.resolve(response.data);
     } catch (error) {
       return Promise.reject(error);
@@ -32,7 +33,7 @@ export const useAppStore = defineStore('app', () => {
         profileId,
         status
       );
-      notify('success', 'statusUpdated');
+      notify('success', 'status updated');
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -45,7 +46,7 @@ export const useAppStore = defineStore('app', () => {
         profileId,
         toggleValue
       );
-      notify('success', 'statusUpdated');
+      notify('success', 'status updated');
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -53,12 +54,12 @@ export const useAppStore = defineStore('app', () => {
   };
 
   return {
-    managerProfileId,
-    managerFullName,
-    managerTitle,
-    managerProfilePicture,
-    mangerActiveStatus,
-    managerStatus,
+    profileId,
+    fullName,
+    title,
+    profilePicture,
+    currentStatus,
+    AllStatus,
     getManagerProfileByEmail,
     updateManagerProfileStatusByEmail,
     updateGetProfileStatusFromExchange,

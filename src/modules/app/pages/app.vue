@@ -13,18 +13,14 @@
       </q-toolbar>
       <div class="profile-container">
         <div class="profile-img-wrapper flex flex-center">
-          <img
-            :style="imageStyle"
-            :src="managerProfilePicture"
-            alt="profile-image"
-          />
+          <img :style="imageStyle" :src="profilePicture" alt="profile-image" />
         </div>
         <div class="text-center q-mt-md flex column">
           <span class="text-black text-h5 q-mt-sm">
-            {{ managerFullName }}
+            {{ fullName }}
           </span>
           <span class="profile-work text-body1 q-mt-sm">
-            {{ managerTitle }}
+            {{ title }}
           </span>
         </div>
       </div>
@@ -36,13 +32,13 @@
             <p class="q-ml-lg">My Status</p>
             <div>
               <q-tabs
-                v-model="mangerActiveStatus"
+                v-model="currentStatus"
                 indicator-color="transparent"
                 :active-bg-color="activeColor"
                 class="status-tabs text-black q-px-md"
               >
                 <q-tab
-                  v-for="status in managerStatus"
+                  v-for="status in AllStatus"
                   :key="status.id"
                   :name="status.id"
                   :icon="statusIcon(status.id)"
@@ -71,20 +67,16 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
+import { colors, imageShadows } from 'src/services/static-lookups';
 import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
 import { storeToRefs } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
+import storage from 'src/services/storage';
 
 const appStore = useAppStore();
-const {
-  managerProfileId,
-  managerFullName,
-  managerTitle,
-  managerProfilePicture,
-  mangerActiveStatus,
-  managerStatus,
-} = storeToRefs(appStore);
+const { profileId, fullName, title, profilePicture, currentStatus, AllStatus } =
+  storeToRefs(appStore);
 const {
   getManagerProfileByEmail,
   updateManagerProfileStatusByEmail,
@@ -93,24 +85,10 @@ const {
 
 const toggleStatus = ref(false);
 
-const colors = {
-  1: 'primary',
-  2: 'accent',
-  3: 'secondary',
-  4: 'dark',
-};
-
-const imageShadows = {
-  1: 'rgba(97, 244, 170, 0.2)',
-  2: 'rgba(227, 84, 84, 0.2)',
-  3: 'rgba(246, 196, 77, 0.2)',
-  4: 'rgba(109, 109, 109, 0.2)',
-};
-
 const imageStyle = computed(() => {
-  const activePrimaryShadow = getCssVar(colors[mangerActiveStatus.value ?? 4]);
+  const activePrimaryShadow = getCssVar(colors[currentStatus.value ?? 4]);
   const activeSecondaryShadow =
-    imageShadows[mangerActiveStatus.value] ?? 'transparent';
+    imageShadows[currentStatus.value] ?? 'transparent';
 
   return {
     borderRadius: '50%',
@@ -120,7 +98,7 @@ const imageStyle = computed(() => {
 });
 
 const activeColor = computed(() => {
-  return colors[mangerActiveStatus.value];
+  return colors[currentStatus.value];
 });
 
 const statusIcon = (statusId) => {
@@ -135,11 +113,8 @@ const statusIcon = (statusId) => {
 };
 
 const handleChange = () => {
-  if (mangerActiveStatus.value) {
-    updateManagerProfileStatusByEmail(
-      managerProfileId.value,
-      mangerActiveStatus.value
-    );
+  if (currentStatus.value) {
+    updateManagerProfileStatusByEmail(profileId.value, currentStatus.value);
   } else {
     notify('error', 'please choose a status first');
   }
@@ -149,17 +124,15 @@ watch(
   () => toggleStatus.value,
   (val) => {
     if (val) {
-      mangerActiveStatus.value = null;
+      currentStatus.value = null;
     }
-    updateGetProfileStatusFromExchange(
-      managerProfileId.value,
-      toggleStatus.value
-    );
+    updateGetProfileStatusFromExchange(profileId.value, !toggleStatus.value);
   }
 );
 
 onMounted(() => {
-  getManagerProfileByEmail('asherif@mersvo.com');
+  const email = storage.getProfile().email;
+  getManagerProfileByEmail(email);
 });
 </script>
 
