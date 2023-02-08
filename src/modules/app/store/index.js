@@ -16,12 +16,12 @@ export const useAppStore = defineStore('app', () => {
     try {
       const response = await api.getManagerProfileByEmail(email);
       const { employee, statusObject, employeeCurrentStatus } = response.data;
-      profileId.value = employee.id;
-      fullName.value = employee.fullName;
-      title.value = employee.title;
-      profilePicture.value = employee.attachment.filePath;
-      toggleValue.value = employee.getProfileStatusFromExchange;
-      currentStatus.value = employeeCurrentStatus.id;
+      profileId.value = employee?.id;
+      fullName.value = employee?.fullName;
+      title.value = employee?.title;
+      profilePicture.value = employee?.attachment?.filePath;
+      toggleValue.value = employee?.getProfileStatusFromExchange;
+      currentStatus.value = employeeCurrentStatus?.id;
       AllStatus.value = statusObject.filter((status) => !status.dimmed);
       return Promise.resolve(response.data);
     } catch (error) {

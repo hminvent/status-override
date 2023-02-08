@@ -1,8 +1,8 @@
 <template>
   <q-layout class="login-layout" view="lhh LpR lff">
     <q-header reveal class="login-header">
-      <q-toolbar class="q-mt-lg q-ml-lg q-mb-md">
-        <img src="/statusOverride/images/mersvo-logo.png" />
+      <q-toolbar class="q-mt-lg q-mb-md">
+        <img class="q-ml-auto" src="/statusOverride/images/ndf-logo.png" />
       </q-toolbar>
     </q-header>
 
