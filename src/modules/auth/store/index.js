@@ -9,9 +9,9 @@ import { DEFAULT_ROUTE } from 'src/configs/router';
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
 
-  async function login(email, password) {
+  async function login(data) {
     try {
-      const response = await api.login(email, password);
+      const response = await api.login(data);
       storage.setToken(response.data.jwtToken);
       storage.setRefreshToken(response.data.refreshToken);
       getProfile();

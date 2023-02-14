@@ -82,7 +82,7 @@ const isPwd = ref(true);
 
 const submit = () => {
   const { email, password } = loginForm;
-  login(email, password);
+  login({ email, password });
 };
 </script>
 <style lang="scss">
