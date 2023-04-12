@@ -4,7 +4,7 @@
       <q-toolbar class="flex justify-between q-ml-sm q-mb-md">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/ndf-logo.png"
+          src="/nameplate/images/ndf-logo.png"
           width="91"
           height="40"
           alt="logo"
@@ -114,7 +114,7 @@ const statusIcon = (statusId) => {
     4: 'sun-umbrella.svg',
   };
 
-  return `img:/statusOverride/images/icons/${obj[statusId]}`;
+  return `img:/nameplate/images/icons/${obj[statusId]}`;
 };
 
 const handleChange = () => {
