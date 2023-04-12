@@ -4,7 +4,7 @@
       <q-toolbar class="flex justify-between q-ml-sm q-mb-md">
         <img
           class="q-mt-md"
-          src="/nameplate/images/ndf-logo.png"
+          src="/nameplate/images/mersvo-logo.png"
           width="91"
           height="40"
           alt="logo"
