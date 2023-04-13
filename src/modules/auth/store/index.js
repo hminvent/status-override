@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import storage from 'src/services/storage';
 import api from '../services/api';
 import { timeOutLoader } from 'src/boot/plugins/loading';
 import { DEFAULT_ROUTE } from 'src/configs/router';
+import { notify } from 'src/boot/plugins/notify';
 
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
+
+  const { t } = useI18n();
 
   async function login(data) {
     try {
@@ -16,6 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
       storage.setRefreshToken(response.data.refreshToken);
       getProfile();
     } catch (error) {
+      notify('error', t('auth.errors.login'));
       return Promise.reject(error);
     }
   }
@@ -61,6 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
       storage.setProfile(response.data);
       router.push(DEFAULT_ROUTE);
     } catch (error) {
+      notify('error', t('auth.errors.login'));
       return Promise.reject(error);
     }
   }

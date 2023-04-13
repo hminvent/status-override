@@ -4,7 +4,7 @@
       <q-toolbar class="flex justify-between q-ml-sm q-mb-md">
         <img
           class="q-mt-md"
-          src="/nameplate/images/mersvo-logo.png"
+          src="/statusOverride/images/mersvo-logo.png"
           width="91"
           height="40"
           alt="logo"
@@ -72,7 +72,10 @@ import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
 import { storeToRefs } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
+import { useI18n } from 'vue-i18n';
 import storage from 'src/services/storage';
+
+const { t } = useI18n();
 
 const appStore = useAppStore();
 const {
@@ -114,14 +117,14 @@ const statusIcon = (statusId) => {
     4: 'sun-umbrella.svg',
   };
 
-  return `img:/nameplate/images/icons/${obj[statusId]}`;
+  return `img:/statusOverride/images/icons/${obj[statusId]}`;
 };
 
 const handleChange = () => {
   if (currentStatus.value) {
     updateManagerProfileStatusByEmail(profileId.value, currentStatus.value);
   } else {
-    notify('error', 'please choose a status first');
+    notify('error', t('app.choose'));
   }
 };
 

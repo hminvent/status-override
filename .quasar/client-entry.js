@@ -46,12 +46,10 @@ import quasarUserOptions from './quasar-user-options.js'
 
 
 
-console.info('[Quasar] Running SPA.')
 
 
 
-
-const publicPath = `/nameplate/`
+const publicPath = `/statusOverride/`
 
 async function start ({
   app,

@@ -1,1 +1,3 @@
-export default {};
+export default {
+  choose: 'الرجاء اختيار الحالة أولا',
+};
