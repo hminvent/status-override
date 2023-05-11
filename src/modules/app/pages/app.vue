@@ -1,17 +1,17 @@
 <template>
   <q-layout class="profile-layout" view="lhh LpR lff">
     <header class="profile-header">
-      <q-toolbar class="flex justify-between q-ml-sm q-mb-md">
+      <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/mersvo-logo.png"
+          src="/nameplate/images/mersvo-logo.png"
           width="91"
           height="40"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
       </q-toolbar>
-      <div class="profile-container">
+      <div class="profile-container flex column">
         <div class="profile-img-wrapper flex flex-center">
           <img :style="imageStyle" :src="profilePicture" alt="profile-image" />
         </div>
@@ -101,6 +101,8 @@ const imageStyle = computed(() => {
   return {
     borderRadius: '50%',
     width: '50%',
+    aspectRatio: '1',
+    objectFit: 'cover',
     boxShadow: `0 0 0 4px ${activePrimaryShadow}, 0 0 0 15px ${activeSecondaryShadow}`,
   };
 });
@@ -117,7 +119,7 @@ const statusIcon = (statusId) => {
     4: 'sun-umbrella.svg',
   };
 
-  return `img:/statusOverride/images/icons/${obj[statusId]}`;
+  return `img:/nameplate/images/icons/${obj[statusId]}`;
 };
 
 const handleChange = () => {
