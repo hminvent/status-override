@@ -4,9 +4,7 @@
       <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/nameplate/images/mersvo-logo.png"
-          width="91"
-          height="40"
+          src="/statusOverride/images/ndf-logo.png"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
@@ -119,7 +117,7 @@ const statusIcon = (statusId) => {
     4: 'sun-umbrella.svg',
   };
 
-  return `img:/nameplate/images/icons/${obj[statusId]}`;
+  return `img:/statusOverride/images/icons/${obj[statusId]}`;
 };
 
 const handleChange = () => {
