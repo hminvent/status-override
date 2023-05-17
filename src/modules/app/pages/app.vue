@@ -65,7 +65,11 @@
 
 <script setup>
 import { computed, onMounted, watch } from 'vue';
-import { colors, imageShadows } from 'src/services/static-lookups';
+import {
+  colorNames,
+  shadowValues,
+  iconNames,
+} from 'src/services/static-lookups';
 import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
 import { storeToRefs } from 'pinia';
@@ -91,10 +95,25 @@ const {
   updateGetProfileStatusFromExchange,
 } = appStore;
 
+const statusIds = computed(() => AllStatus.value?.map((status) => status.id));
+
 const imageStyle = computed(() => {
-  const activePrimaryShadow = getCssVar(colors[currentStatus.value ?? 4]);
+  const statusColors = statusIds.value?.reduce((colors, id, index) => {
+    colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
+    return colors;
+  }, {});
+
+  const imageShadows = statusIds.value?.reduce((shadows, id, index) => {
+    shadows[id] = shadowValues[index] || ''; // Assign shadow value based on index, or empty string if index exceeds available shadow values
+    return shadows;
+  }, {});
+
+  const activePrimaryShadow = getCssVar(
+    statusColors?.[currentStatus.value] ?? 'dark'
+  );
+
   const activeSecondaryShadow =
-    imageShadows[currentStatus.value] ?? 'transparent';
+    imageShadows?.[currentStatus.value] ?? 'transparent';
 
   return {
     borderRadius: '50%',
@@ -106,18 +125,21 @@ const imageStyle = computed(() => {
 });
 
 const activeColor = computed(() => {
-  return colors[currentStatus.value];
+  const statusColors = statusIds.value?.reduce((colors, id, index) => {
+    colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
+    return colors;
+  }, {});
+
+  return statusColors?.[currentStatus.value];
 });
 
 const statusIcon = (statusId) => {
-  const obj = {
-    1: 'fluent_door-arrow-left.svg',
-    2: 'loading.svg',
-    3: 'businessmen.svg',
-    4: 'sun-umbrella.svg',
-  };
+  const statusIconMapping = statusIds.value?.reduce((result, id, index) => {
+    result[id] = iconNames[index] || ''; // Assign file name based on index, or empty string if index exceeds available icon names
+    return result;
+  }, {});
 
-  return `img:/statusOverride/images/icons/${obj[statusId]}`;
+  return `img:/statusOverride/images/icons/${statusIconMapping[statusId]}`;
 };
 
 const handleChange = () => {
