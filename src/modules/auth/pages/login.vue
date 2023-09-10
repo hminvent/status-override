@@ -1,69 +1,63 @@
 <template>
-  <q-layout class="login-layout" view="lhh LpR lff">
-    <q-header reveal class="login-header">
-      <q-toolbar class="q-mt-lg q-mb-md">
-        <img class="q-ml-auto" src="/statusOverride/images/ndf-logo.png" />
-      </q-toolbar>
-    </q-header>
+  <div class="row flex-center window-height login-wrapper">
+    <div class="col col-md-6 col-xs-12">
+      <div>
+        <q-img
+          class="logo-img q-mb-xl"
+          src="/images/mom-logo.svg"
+          spinner-color="white"
+        />
+        <div class="text-h4 q-mb-xs">
+          {{ $t('auth.welcome') }}
+        </div>
+        <div class="text-body1 text-grey-6 q-mb-xl">
+          {{ $t('auth.loginMessage') }}
+        </div>
+        <q-form @submit.prevent="onSubmit">
+          <q-input
+            outlined
+            v-model="loginForm.email"
+            type="email"
+            class="q-mb-sm"
+            :label="$t('auth.email')"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          />
 
-    <q-page-container>
-      <q-page class="login-card-wrapper min-height-auto">
-        <q-card flat class="login-card q-py-xl">
-          <q-form>
-            <q-card-section>
-              <div class="text-h6">welcome back</div>
-              <div class="text-login text-h5 text-uppercase text-weight-bold">
-                Login
-              </div>
-            </q-card-section>
-            <q-card-section>
-              <q-input
-                outlined
-                v-model="loginForm.email"
-                type="email"
-                :label-slot="true"
-                class="q-mb-lg"
-              >
-                <template #label>
-                  <span class="text-caption">Email</span>
-                </template>
-              </q-input>
-              <q-input
-                outlined
-                v-model="loginForm.password"
-                :type="isPwd ? 'password' : 'text'"
-                :label-slot="true"
-              >
-                <template #label>
-                  <span class="text-caption">Password</span>
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    size="xs"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-              </q-input>
-            </q-card-section>
-            <q-card-section>
-              <span>forget Password?</span>
-            </q-card-section>
-            <q-card-section>
-              <q-btn
-                rounded
-                class="full-width submit-btn"
-                color="primary"
-                label="Login"
-                @click="submit"
+          <q-input
+            outlined
+            v-model="loginForm.password"
+            :type="isPwd ? 'password' : 'text'"
+            class="q-mb-sm"
+            :label="$t('auth.password')"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
               />
-            </q-card-section>
-          </q-form>
-        </q-card>
-      </q-page>
-    </q-page-container>
-  </q-layout>
+            </template>
+          </q-input>
+
+          <div class="row">
+            <q-btn
+              type="submit"
+              class="full-width flex flex-center"
+              color="primary"
+              :label="$t('auth.login')"
+            />
+          </div>
+        </q-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -78,11 +72,12 @@ const loginForm = reactive({
   password: '',
 });
 
+const isRemember = ref(false);
 const isPwd = ref(true);
 
-const submit = () => {
+const onSubmit = async () => {
   const { email, password } = loginForm;
-  login({ email, password });
+  await login({ email, password });
 };
 </script>
 <style lang="scss">

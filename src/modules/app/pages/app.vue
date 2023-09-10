@@ -1,10 +1,24 @@
 <template>
-  <q-layout class="profile-layout" view="lhh LpR lff">
-    <header class="profile-header">
+  <q-layout class="app-layout" view="lhh LpR lff">
+    <q-card flat class="profile-card">
+      <q-img
+        width="462px"
+        height="539px"
+        src="https://cdn.quasar.dev/img/mountains.jpg"
+      />
+      <q-card-section>
+        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-subtitle2">by John Doe</div>
+      </q-card-section>
+      <q-card-section>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit
+      </q-card-section>
+    </q-card>
+    <!-- <header class="profile-header">
       <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/ndf-logo.png"
+          src="/status-override/images/ndf-logo.png"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
@@ -22,10 +36,22 @@
           </span>
         </div>
       </div>
-    </header>
+    </header> -->
     <q-page-container>
-      <q-page class="min-height-auto q-mt-xl">
-        <q-card flat class="status-card q-py-lg">
+      <q-page class="min-height-auto">
+        <q-card flat class="status-card">
+          <q-card-section class="q-pa-none q-mb-xl">
+            <span class="status-primary-text text-weight-medium">حالتي</span>
+          </q-card-section>
+          <q-card-section class="q-pa-none">
+            <q-tabs v-model="tab" class="text-teal">
+              <q-tab name="mails" icon="mail" label="Mails" />
+              <q-tab name="alarms" icon="alarm" label="Alarms" />
+              <q-tab name="movies" icon="movie" label="Movies" />
+            </q-tabs>
+          </q-card-section>
+        </q-card>
+        <!-- <q-card flat class="status-card q-py-lg">
           <q-card-section>
             <p class="q-ml-lg">My Status</p>
             <div>
@@ -57,7 +83,7 @@
               :disable="toggleValue"
             />
           </q-card-actions>
-        </q-card>
+        </q-card> -->
       </q-page>
     </q-page-container>
   </q-layout>
@@ -67,10 +93,10 @@
 import { computed, onMounted, watch } from 'vue';
 import {
   colorNames,
-  shadowValues,
+  // shadowValues,
   iconNames,
 } from 'src/services/static-lookups';
-import { getCssVar } from 'quasar';
+// import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
 import { storeToRefs } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
@@ -98,29 +124,29 @@ const {
 const statusIds = computed(() => AllStatus.value?.map((status) => status.id));
 
 const imageStyle = computed(() => {
-  const statusColors = statusIds.value?.reduce((colors, id, index) => {
-    colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
-    return colors;
-  }, {});
+  // const statusColors = statusIds.value?.reduce((colors, id, index) => {
+  //   colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
+  //   return colors;
+  // }, {});
 
-  const imageShadows = statusIds.value?.reduce((shadows, id, index) => {
-    shadows[id] = shadowValues[index] || ''; // Assign shadow value based on index, or empty string if index exceeds available shadow values
-    return shadows;
-  }, {});
+  // const imageShadows = statusIds.value?.reduce((shadows, id, index) => {
+  //   shadows[id] = shadowValues[index] || ''; // Assign shadow value based on index, or empty string if index exceeds available shadow values
+  //   return shadows;
+  // }, {});
 
-  const activePrimaryShadow = getCssVar(
-    statusColors?.[currentStatus.value] ?? 'dark'
-  );
+  // const activePrimaryShadow = getCssVar(
+  //   statusColors?.[currentStatus.value] ?? 'dark'
+  // );
 
-  const activeSecondaryShadow =
-    imageShadows?.[currentStatus.value] ?? 'transparent';
+  // const activeSecondaryShadow =
+  //   imageShadows?.[currentStatus.value] ?? 'transparent';
 
   return {
     borderRadius: '50%',
     width: '50%',
     aspectRatio: '1',
     objectFit: 'cover',
-    boxShadow: `0 0 0 4px ${activePrimaryShadow}, 0 0 0 15px ${activeSecondaryShadow}`,
+    // boxShadow: `0 0 0 4px ${activePrimaryShadow}, 0 0 0 15px ${activeSecondaryShadow}`,
   };
 });
 
@@ -139,7 +165,7 @@ const statusIcon = (statusId) => {
     return result;
   }, {});
 
-  return `img:/statusOverride/images/icons/${statusIconMapping[statusId]}`;
+  return `img:/status-override/images/icons/${statusIconMapping[statusId]}`;
 };
 
 const handleChange = () => {
