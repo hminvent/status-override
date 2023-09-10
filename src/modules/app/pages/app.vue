@@ -40,57 +40,41 @@
     <q-page-container>
       <q-page class="min-height-auto">
         <q-card flat class="status-card">
-          <q-card-section class="q-pa-none q-mb-xl">
-            <span class="status-primary-text text-weight-medium">حالتي</span>
+          <q-card-section class="row items-center q-pa-none q-mb-xl">
+            <q-toggle size="90px" class="toggle-status" v-model="toggleValue" />
+            <span class="status-primary-text text-weight-medium"
+              >تغيير الحالة يدوياً</span
+            >
           </q-card-section>
           <q-card-section class="q-pa-none">
-            <q-tabs v-model="tab" class="text-teal">
-              <q-tab name="mails" icon="mail" label="Mails" />
-              <q-tab name="alarms" icon="alarm" label="Alarms" />
-              <q-tab name="movies" icon="movie" label="Movies" />
+            <q-tabs
+              v-model="currentStatus"
+              indicator-color="transparent"
+              :active-bg-color="activeColor"
+              active-class="status-active"
+              class="status-tabs text-black"
+            >
+              <q-tab
+                v-for="status in AllStatus"
+                :key="status.id"
+                :name="status.id"
+                :disable="!toggleValue"
+                @click="handleStatusChange"
+                no-caps
+              >
+                <q-icon size="56px" :name="statusIcon(status.id)" />
+                <span class="q-tab__label">{{ status.name_Ar }}</span>
+              </q-tab>
             </q-tabs>
           </q-card-section>
         </q-card>
-        <!-- <q-card flat class="status-card q-py-lg">
-          <q-card-section>
-            <p class="q-ml-lg">My Status</p>
-            <div>
-              <q-tabs
-                v-model="currentStatus"
-                indicator-color="transparent"
-                :active-bg-color="activeColor"
-                class="status-tabs text-black q-px-md"
-              >
-                <q-tab
-                  v-for="status in AllStatus"
-                  :key="status.id"
-                  :name="status.id"
-                  :icon="statusIcon(status.id)"
-                  :label="status.name"
-                  :disable="toggleValue"
-                  no-caps
-                />
-              </q-tabs>
-            </div>
-          </q-card-section>
-
-          <q-card-actions vertical align="center">
-            <q-btn
-              rounded
-              class="change-btn text-white"
-              @click="handleChange"
-              label="Change"
-              :disable="toggleValue"
-            />
-          </q-card-actions>
-        </q-card> -->
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import { computed, onMounted, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import {
   colorNames,
   // shadowValues,
@@ -107,52 +91,25 @@ const { t } = useI18n();
 
 const appStore = useAppStore();
 const {
-  profileId,
-  fullName,
-  title,
-  profilePicture,
-  currentStatus,
-  toggleValue,
-  AllStatus,
-} = storeToRefs(appStore);
-const {
   getManagerProfileByEmail,
   updateManagerProfileStatusByEmail,
   updateGetProfileStatusFromExchange,
 } = appStore;
 
+const profileId = ref(null);
+const fullName = ref(null);
+const title = ref(null);
+const profilePicture = ref(null);
+const currentStatus = ref(null);
+const toggleValue = ref(null);
+const AllStatus = ref(null);
+
 const statusIds = computed(() => AllStatus.value?.map((status) => status.id));
-
-const imageStyle = computed(() => {
-  // const statusColors = statusIds.value?.reduce((colors, id, index) => {
-  //   colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
-  //   return colors;
-  // }, {});
-
-  // const imageShadows = statusIds.value?.reduce((shadows, id, index) => {
-  //   shadows[id] = shadowValues[index] || ''; // Assign shadow value based on index, or empty string if index exceeds available shadow values
-  //   return shadows;
-  // }, {});
-
-  // const activePrimaryShadow = getCssVar(
-  //   statusColors?.[currentStatus.value] ?? 'dark'
-  // );
-
-  // const activeSecondaryShadow =
-  //   imageShadows?.[currentStatus.value] ?? 'transparent';
-
-  return {
-    borderRadius: '50%',
-    width: '50%',
-    aspectRatio: '1',
-    objectFit: 'cover',
-    // boxShadow: `0 0 0 4px ${activePrimaryShadow}, 0 0 0 15px ${activeSecondaryShadow}`,
-  };
-});
 
 const activeColor = computed(() => {
   const statusColors = statusIds.value?.reduce((colors, id, index) => {
-    colors[id] = colorNames[index] || ''; // Assign color name based on index, or empty string if index exceeds available color names
+    // Assign color name based on index, or empty string if index exceeds available color names
+    colors[id] = colorNames[index] || '';
     return colors;
   }, {});
 
@@ -161,34 +118,43 @@ const activeColor = computed(() => {
 
 const statusIcon = (statusId) => {
   const statusIconMapping = statusIds.value?.reduce((result, id, index) => {
-    result[id] = iconNames[index] || ''; // Assign file name based on index, or empty string if index exceeds available icon names
+    // Assign file name based on index, or empty string if index exceeds available icon names
+    result[id] = iconNames[index] || '';
     return result;
   }, {});
 
   return `img:/status-override/images/icons/${statusIconMapping[statusId]}`;
 };
 
-const handleChange = () => {
-  if (currentStatus.value) {
-    updateManagerProfileStatusByEmail(profileId.value, currentStatus.value);
-  } else {
-    notify('error', t('app.choose'));
-  }
+const handleStatusChange = () => {
+  updateManagerProfileStatusByEmail(profileId.value, currentStatus.value);
 };
 
 watch(
   () => toggleValue.value,
-  (val) => {
-    if (val) {
-      currentStatus.value = null;
-    }
+  () => {
     updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
   }
 );
 
-onMounted(() => {
+const setProfileValues = () => {
   const email = storage.getProfile().email;
-  getManagerProfileByEmail(email);
+  getManagerProfileByEmail(email).then((response) => {
+    if (response) {
+      const { employee, statusObject, employeeCurrentStatus } = response;
+      profileId.value = employee?.id;
+      fullName.value = employee?.fullName;
+      title.value = employee?.title;
+      profilePicture.value = employee?.attachment?.filePath;
+      toggleValue.value = employee?.getProfileStatusFromExchange;
+      currentStatus.value = employeeCurrentStatus?.id;
+      AllStatus.value = statusObject.filter((status) => !status.dimmed);
+    }
+  });
+};
+
+onMounted(() => {
+  setProfileValues();
 });
 </script>
 

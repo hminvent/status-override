@@ -6,10 +6,61 @@
   }
 
   .status-card {
-    padding: 180px 63px 274px 63px;
+    padding: 180px 64px 274px 63px;
 
     .status-primary-text {
       font-size: 40px;
+    }
+
+    .status-tabs {
+      .q-tabs__content {
+        flex-wrap: wrap !important;
+        gap: 24px;
+        justify-content: start;
+        .q-tab {
+          width: 661px;
+          height: 214px;
+          justify-content: center;
+          border-radius: 32px;
+
+          border: double 4px transparent;
+          background-image: linear-gradient(white, white),
+            linear-gradient(
+              180deg,
+              #fff3af 0%,
+              #f4e687 8.33%,
+              #e5a21c 25.52%,
+              #eeb838 42.19%,
+              #ebda46 54.17%,
+              #fae8b4 67.19%,
+              #ffffff 75.52%,
+              #fae8b4 90.1%
+            );
+          background-origin: border-box;
+          background-clip: padding-box, border-box;
+
+          &.status-active {
+            .q-tab__label {
+              color: #fff;
+            }
+            .q-icon {
+              img {
+                filter: invert(93%) sepia(53%) saturate(2%) hue-rotate(355deg)
+                  brightness(105%) contrast(101%);
+              }
+            }
+          }
+
+          .q-tab__content {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            .q-tab__label {
+              font-size: 32px;
+            }
+          }
+        }
+      }
     }
   }
 }
