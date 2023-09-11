@@ -37,7 +37,7 @@ export const useAppStore = defineStore('app', () => {
 
       notify(
         'success',
-        toggleValue ? t('app.status.noChange') : t('app.status.change')
+        toggleValue ? t('app.status.change') : t('app.status.noChange')
       );
 
       return Promise.resolve(response);

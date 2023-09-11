@@ -28,11 +28,10 @@
 
     <q-card flat class="status-card">
       <q-card-section class="row items-center q-pa-none q-mb-xl">
-        <q-toggle
-          @update:model-value="handleToggleChange"
-          size="90px"
-          class="toggle-status"
+        <Toggle
           v-model="toggleValue"
+          class="status-toggle q-mr-md"
+          @change="handleToggleChange"
         />
         <h4 class="status-primary-text text-weight-medium">
           تغيير الحالة يدوياً
@@ -64,20 +63,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
-import {
-  colorNames,
-  // shadowValues,
-  iconNames,
-} from 'src/services/static-lookups';
-// import { getCssVar } from 'quasar';
+import { computed, onMounted, ref } from 'vue';
+import { colorNames, iconNames } from 'src/services/static-lookups';
 import { useAppStore } from '../store';
-import { storeToRefs } from 'pinia';
-import { notify } from 'src/boot/plugins/notify';
-import { useI18n } from 'vue-i18n';
-import storage from 'src/services/storage';
+import Toggle from '@vueform/toggle';
 
-const { t } = useI18n();
+import storage from 'src/services/storage';
 
 const appStore = useAppStore();
 const {
@@ -91,7 +82,7 @@ const fullName = ref(null);
 const title = ref(null);
 const profilePicture = ref(null);
 const currentStatus = ref(null);
-const toggleValue = ref(null);
+const toggleValue = ref(false);
 const AllStatus = ref(null);
 
 const statusIds = computed(() => AllStatus.value?.map((status) => status.id));
@@ -121,7 +112,9 @@ const handleStatusChange = () => {
 };
 
 const handleToggleChange = () => {
-  updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
+  if (profileId.value !== null) {
+    updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
+  }
 };
 
 const setProfileValues = () => {
@@ -133,7 +126,7 @@ const setProfileValues = () => {
       fullName.value = employee?.fullName;
       title.value = employee?.title;
       profilePicture.value = employee?.attachment?.filePath;
-      toggleValue.value = employee?.getProfileStatusFromExchange;
+      toggleValue.value = !employee?.getProfileStatusFromExchange;
       currentStatus.value = employeeCurrentStatus?.id;
       AllStatus.value = statusObject.filter((status) => !status.dimmed);
     }
@@ -146,5 +139,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+@import '@vueform/toggle/themes/default.css';
 @import 'src/css/profile.scss';
 </style>

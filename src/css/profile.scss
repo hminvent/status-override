@@ -41,9 +41,21 @@
   .status-card {
     padding: 0px 64px 274px 63px;
 
-    .toggle-status {
-      .q-toggle__inner--truthy {
-        color: rgba(195, 157, 82, 1);
+    .status-toggle {
+      --toggle-width: 96px;
+      --toggle-height: 48px;
+      --toggle-bg-on: #c39d52;
+      --toggle-border-on: #c39d52;
+
+      .toggle-handle-on {
+        right: unset #{'/* rtl:ignore */'};
+        left: 100% #{'/* rtl:ignore */'};
+        transform: translateX(-100%) #{'/* rtl:ignore */'};
+      }
+
+      .toggle-handle-off {
+        left: 0 #{'/* rtl:ignore */'};
+        right: unset #{'/* rtl:ignore */'};
       }
     }
 
