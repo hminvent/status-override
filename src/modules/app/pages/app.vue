@@ -117,20 +117,19 @@ const handleToggleChange = () => {
   }
 };
 
-const setProfileValues = () => {
+const setProfileValues = async () => {
   const email = storage.getProfile().email;
-  getManagerProfileByEmail(email).then((response) => {
-    if (response) {
-      const { employee, statusObject, employeeCurrentStatus } = response;
-      profileId.value = employee?.id;
-      fullName.value = employee?.fullName;
-      title.value = employee?.title;
-      profilePicture.value = employee?.attachment?.filePath;
-      toggleValue.value = !employee?.getProfileStatusFromExchange;
-      currentStatus.value = employeeCurrentStatus?.id;
-      AllStatus.value = statusObject.filter((status) => !status.dimmed);
-    }
-  });
+  const managerProfile = await getManagerProfileByEmail(email);
+  if (managerProfile) {
+    const { employee, statusObject, employeeCurrentStatus } = managerProfile;
+    profileId.value = employee?.id;
+    fullName.value = employee?.fullName;
+    title.value = employee?.title;
+    profilePicture.value = employee?.attachment?.filePath;
+    toggleValue.value = !employee?.getProfileStatusFromExchange;
+    currentStatus.value = employeeCurrentStatus?.id;
+    AllStatus.value = statusObject.filter((status) => !status.dimmed);
+  }
 };
 
 onMounted(() => {
