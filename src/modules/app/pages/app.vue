@@ -1,76 +1,66 @@
 <template>
-  <q-layout class="app-layout" view="lhh LpR lff">
+  <main class="app-layout">
     <q-card flat class="profile-card">
-      <q-img
-        width="462px"
-        height="539px"
-        src="https://cdn.quasar.dev/img/mountains.jpg"
-      />
-      <q-card-section>
-        <div class="text-h6">Our Changing Planet</div>
-        <div class="text-subtitle2">by John Doe</div>
-      </q-card-section>
-      <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
+      <q-card-section class="row items-center q-pa-none">
+        <q-card-section class="q-pa-none profile-card-img-wrapper">
+          <q-img
+            class="profile-card-img"
+            src="/status-override/images/minister-photo.png"
+          />
+        </q-card-section>
+
+        <q-card-section class="q-pa-none">
+          <h1 class="profile-card-title text-weight-bold">
+            سلمان بن يوسف الدوسري
+          </h1>
+
+          <p class="profile-card-subtitle text-weight-medium">وزير الإعلام</p>
+
+          <q-badge class="profile-card-badge justify-center">
+            <span
+              class="profile-card-badge-text text-black text-h4 text-weight-medium"
+              >مكتب: CS3</span
+            >
+          </q-badge>
+        </q-card-section>
       </q-card-section>
     </q-card>
-    <!-- <header class="profile-header">
-      <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
-        <img
-          class="q-mt-md"
-          src="/status-override/images/ndf-logo.png"
-          alt="logo"
+
+    <q-card flat class="status-card">
+      <q-card-section class="row items-center q-pa-none q-mb-xl">
+        <q-toggle
+          @update:model-value="handleToggleChange"
+          size="90px"
+          class="toggle-status"
+          v-model="toggleValue"
         />
-        <q-toggle class="toggle-status" v-model="toggleValue" />
-      </q-toolbar>
-      <div class="profile-container flex column">
-        <div class="profile-img-wrapper flex flex-center">
-          <img :style="imageStyle" :src="profilePicture" alt="profile-image" />
-        </div>
-        <div class="text-center q-mt-md flex column">
-          <span class="text-black text-h5 q-mt-sm">
-            {{ fullName }}
-          </span>
-          <span class="profile-work text-body1 q-mt-sm">
-            {{ title }}
-          </span>
-        </div>
-      </div>
-    </header> -->
-    <q-page-container>
-      <q-page class="min-height-auto">
-        <q-card flat class="status-card">
-          <q-card-section class="row items-center q-pa-none q-mb-xl">
-            <q-toggle size="90px" class="toggle-status" v-model="toggleValue" />
-            <span class="status-primary-text text-weight-medium"
-              >تغيير الحالة يدوياً</span
-            >
-          </q-card-section>
-          <q-card-section class="q-pa-none">
-            <q-tabs
-              v-model="currentStatus"
-              indicator-color="transparent"
-              :active-bg-color="activeColor"
-              active-class="status-active"
-              class="status-tabs text-black"
-            >
-              <q-tab
-                v-for="status in AllStatus"
-                :key="status.id"
-                :name="status.id"
-                :disable="!toggleValue"
-                @click="handleStatusChange"
-                no-caps
-              >
-                <q-icon size="56px" :name="statusIcon(status.id)" />
-                <span class="q-tab__label">{{ status.name_Ar }}</span>
-              </q-tab>
-            </q-tabs>
-          </q-card-section>
-        </q-card>
-      </q-page>
-    </q-page-container>
-  </q-layout>
+        <h4 class="status-primary-text text-weight-medium">
+          تغيير الحالة يدوياً
+        </h4>
+      </q-card-section>
+      <q-card-section class="q-pa-none">
+        <q-tabs
+          v-model="currentStatus"
+          indicator-color="transparent"
+          :active-bg-color="activeColor"
+          active-class="status-active"
+          class="status-tabs text-black"
+        >
+          <q-tab
+            v-for="status in AllStatus"
+            :key="status.id"
+            :name="status.id"
+            :disable="!toggleValue"
+            @click="handleStatusChange"
+            no-caps
+          >
+            <q-icon size="56px" :name="statusIcon(status.id)" />
+            <span class="q-tab__label">{{ status.name_Ar }}</span>
+          </q-tab>
+        </q-tabs>
+      </q-card-section>
+    </q-card>
+  </main>
 </template>
 
 <script setup>
@@ -130,12 +120,9 @@ const handleStatusChange = () => {
   updateManagerProfileStatusByEmail(profileId.value, currentStatus.value);
 };
 
-watch(
-  () => toggleValue.value,
-  () => {
-    updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
-  }
-);
+const handleToggleChange = () => {
+  updateGetProfileStatusFromExchange(profileId.value, toggleValue.value);
+};
 
 const setProfileValues = () => {
   const email = storage.getProfile().email;

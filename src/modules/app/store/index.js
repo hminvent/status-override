@@ -1,8 +1,11 @@
 import api from '../services/api';
 import { defineStore } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
+import { useI18n } from 'vue-i18n';
 
 export const useAppStore = defineStore('app', () => {
+  const { t } = useI18n();
+
   const getManagerProfileByEmail = async (email) => {
     try {
       const response = await api.getManagerProfileByEmail(email);
@@ -18,7 +21,7 @@ export const useAppStore = defineStore('app', () => {
         profileId,
         status
       );
-      notify('success', 'status updated');
+      notify('success', t('app.status.success'));
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -29,8 +32,14 @@ export const useAppStore = defineStore('app', () => {
     try {
       const response = api.updateGetProfileStatusFromExchange(
         profileId,
-        toggleValue
+        !toggleValue
       );
+
+      notify(
+        'success',
+        toggleValue ? t('app.status.noChange') : t('app.status.change')
+      );
+
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);

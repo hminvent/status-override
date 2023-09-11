@@ -2,14 +2,49 @@
   min-height: auto !important;
 
   .profile-card {
-    background-color: red;
+    padding: 72px 0 48px 89px;
+    background-image: url('/status-override/images/pattern-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .profile-card-img-wrapper {
+      margin-right: 109px;
+      .profile-card-img {
+        width: 462px;
+        height: 539px;
+      }
+    }
+
+    .profile-card-title {
+      font-size: 96px;
+      letter-spacing: normal;
+      line-height: normal;
+      margin: 0;
+    }
+
+    .profile-card-subtitle {
+      color: rgb(128, 128, 128);
+      font-size: 40px;
+    }
+
+    .profile-card-badge {
+      width: 213px;
+      height: 47px;
+      background-color: rgba(96, 96, 96, 0.12);
+
+      .profile-card-badge-text {
+        letter-spacing: normal;
+      }
+    }
   }
 
   .status-card {
-    padding: 180px 64px 274px 63px;
+    padding: 0px 64px 274px 63px;
 
-    .status-primary-text {
-      font-size: 40px;
+    .toggle-status {
+      .q-toggle__inner--truthy {
+        color: rgba(195, 157, 82, 1);
+      }
     }
 
     .status-tabs {
@@ -49,6 +84,10 @@
                   brightness(105%) contrast(101%);
               }
             }
+          }
+
+          &.disabled {
+            border: 5px solid rgb(211, 211, 211);
           }
 
           .q-tab__content {

@@ -1,12 +1,7 @@
 export default {
-  login: 'Login',
-  rememberMe: 'Remember me',
-  forgetPassword: 'Forgot password?',
-  errors: {
-    login: 'Invalid email or password',
+  status: {
+    success: 'status has been changed successfully',
+    change: 'You can change the status manually',
+    noChange: 'Manually changing the status is prohibited',
   },
-  success: {
-    login: 'Logged in successfully',
-  },
-  choose: 'please choose status first',
 };
