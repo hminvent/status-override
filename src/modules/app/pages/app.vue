@@ -34,7 +34,7 @@
           @change="handleToggleChange"
         />
         <h4 class="status-primary-text text-weight-medium">
-          تغيير الحالة يدوياً
+          تغيير الحالة
         </h4>
       </q-card-section>
       <q-card-section class="q-pa-none">
