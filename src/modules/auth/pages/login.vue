@@ -4,7 +4,7 @@
       <div>
         <q-img
           class="logo-img q-mb-xl"
-          src="/images/mom-logo.svg"
+          src="/status-override/images/mom-logo.svg"
           spinner-color="white"
         />
         <div class="text-h4 q-mb-xs">
