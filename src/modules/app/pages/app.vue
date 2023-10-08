@@ -33,9 +33,7 @@
           class="status-toggle q-mr-md"
           @change="handleToggleChange"
         />
-        <h4 class="status-primary-text text-weight-medium">
-          تغيير الحالة
-        </h4>
+        <h4 class="status-primary-text text-weight-medium">تغيير الحالة</h4>
       </q-card-section>
       <q-card-section class="q-pa-none">
         <q-tabs
@@ -66,9 +64,15 @@
 import { computed, onMounted, ref } from 'vue';
 import { colorNames, iconNames } from 'src/services/static-lookups';
 import { useAppStore } from '../store';
+import { useAuthStore } from 'src/modules/auth/store';
+import { useRouter } from 'vue-router';
 import Toggle from '@vueform/toggle';
-
 import storage from 'src/services/storage';
+
+const router = useRouter();
+
+const authStore = useAuthStore();
+const { login, getProfile } = authStore;
 
 const appStore = useAppStore();
 const {
@@ -132,8 +136,34 @@ const setProfileValues = async () => {
   }
 };
 
+const handleAutoLogin = async () => {
+  const { query } = router.currentRoute.value;
+  if (Object.keys(query).length > 0) {
+    for (const key in query) {
+      const decrypted = window.atob(key);
+      const email = decrypted?.split('&')[0]?.slice(6);
+      const password = decrypted?.split('&')[1]?.slice(9);
+      if (email && password) {
+        const loginResponse = await login({ email, password });
+        if (loginResponse) {
+          const profileResponse = await getProfile();
+          if (profileResponse) {
+            setProfileValues();
+          }
+        } else {
+          router.push('/auth/login');
+        }
+      } else {
+        router.push('/auth/login');
+      }
+    }
+  } else {
+    setProfileValues();
+  }
+};
+
 onMounted(() => {
-  setProfileValues();
+  handleAutoLogin();
 });
 </script>
 

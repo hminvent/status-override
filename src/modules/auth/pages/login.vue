@@ -72,7 +72,6 @@ const loginForm = reactive({
   password: '',
 });
 
-const isRemember = ref(false);
 const isPwd = ref(true);
 
 const onSubmit = async () => {
