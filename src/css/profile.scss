@@ -116,7 +116,9 @@
 }
 
 body.screen--xs,
-body.screen--sm {
+body.screen--sm,
+body.screen--md,
+body.screen--lg {
   .app-layout {
     .profile-card {
       padding: 0 0 80px 0;
