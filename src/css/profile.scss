@@ -2,13 +2,12 @@
   min-height: auto !important;
 
   .profile-card {
-    padding: 72px 0 48px 89px;
+    padding: 72px 0 90px 89px;
     background-image: url('/status-override/images/pattern-background.png');
     background-repeat: no-repeat;
     background-size: cover;
 
     .profile-card-img-wrapper {
-      margin-right: 109px;
       .profile-card-img {
         width: 462px;
         height: 539px;
@@ -108,6 +107,54 @@
             gap: 10px;
             .q-tab__label {
               font-size: 32px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+body.screen--xs,
+body.screen--sm {
+  .app-layout {
+    .profile-card {
+      padding: 0 0 80px 0;
+      .profile-card-img-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .profile-card-description {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .profile-card-title {
+          font-size: 48px;
+        }
+
+        .profile-card-subtitle {
+          font-size: 32px;
+        }
+      }
+    }
+
+    .status-tabs {
+      .q-tabs__content {
+        flex-wrap: wrap !important;
+        gap: 24px;
+        justify-content: start;
+        .q-tab {
+          width: 350px;
+          height: 150px;
+          border-radius: 32px;
+          justify-content: center;
+          .q-tab__content {
+            .q-tab__label {
+              font-size: 24px;
             }
           }
         }

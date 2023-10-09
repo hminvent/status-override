@@ -9,7 +9,7 @@
           />
         </q-card-section>
 
-        <q-card-section class="q-pa-none">
+        <q-card-section class="profile-card-description q-pa-none">
           <h1 class="profile-card-title text-weight-bold">
             سلمان بن يوسف الدوسري
           </h1>
@@ -19,8 +19,8 @@
           <q-badge class="profile-card-badge justify-center">
             <span
               class="profile-card-badge-text text-black text-h4 text-weight-medium"
-              >مكتب: CS3</span
-            >
+              >مكتب : CS3
+            </span>
           </q-badge>
         </q-card-section>
       </q-card-section>
@@ -51,7 +51,10 @@
             @click="handleStatusChange"
             no-caps
           >
-            <q-icon size="56px" :name="statusIcon(status.id)" />
+            <q-icon
+              :size="$q.screen.lt.md ? '24px' : '56px'"
+              :name="statusIcon(status.id)"
+            />
             <span class="q-tab__label">{{ status.name_Ar }}</span>
           </q-tab>
         </q-tabs>
