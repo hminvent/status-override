@@ -65,7 +65,7 @@ import { ref, reactive } from 'vue';
 import { useAuthStore } from '../store';
 
 const authStore = useAuthStore();
-const { login } = authStore;
+const { login, getProfile } = authStore;
 
 const loginForm = reactive({
   email: '',
@@ -76,7 +76,10 @@ const isPwd = ref(true);
 
 const onSubmit = async () => {
   const { email, password } = loginForm;
-  await login({ email, password });
+  const loginResponse = await login({ email, password });
+  if (loginResponse) {
+    getProfile();
+  }
 };
 </script>
 <style lang="scss">
