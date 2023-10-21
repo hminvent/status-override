@@ -1,8 +1,14 @@
 <template>
   <main class="app-layout">
     <q-card flat class="profile-card">
-      <q-card-section class="row items-center q-pa-none">
-        <q-card-section class="q-pa-none profile-card-img-wrapper">
+      <q-card-section
+        :class="[$q.screen.gt.lg ? 'row' : 'row no-wrap']"
+        class="items-center q-pa-none"
+      >
+        <q-card-section
+          :class="[$q.screen.gt.lg ? '' : 'q-pr-lg']"
+          class="q-pa-none profile-card-img-wrapper"
+        >
           <q-img
             class="profile-card-img"
             src="/status-override/images/minister-photo.png"
@@ -18,7 +24,8 @@
 
           <q-badge class="profile-card-badge justify-center">
             <span
-              class="profile-card-badge-text text-black text-h4 text-weight-medium"
+              :class="[$q.screen.gt.lg ? 'text-h4' : 'text-h5']"
+              class="profile-card-badge-text text-black text-weight-medium"
               >مكتب : CS3
             </span>
           </q-badge>
@@ -27,7 +34,10 @@
     </q-card>
 
     <q-card flat class="status-card">
-      <q-card-section class="row items-center q-pa-none q-mb-xl">
+      <q-card-section
+        :class="[$q.screen.gt.lg ? 'q-mb-xl' : 'q-mb-sm']"
+        class="row items-center q-pa-none"
+      >
         <Toggle
           v-model="toggleValue"
           class="status-toggle q-mr-md"
@@ -52,7 +62,7 @@
             no-caps
           >
             <q-icon
-              :size="$q.screen.lt.md ? '24px' : '56px'"
+              :size="$q.screen.gt.lg ? '55px' : '40px'"
               :name="statusIcon(status.id)"
             />
             <span class="q-tab__label">{{ status.name_Ar }}</span>

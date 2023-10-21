@@ -114,3 +114,52 @@
     }
   }
 }
+
+body.screen--md,
+body.screen--lg {
+  .app-layout {
+    .profile-card {
+      padding: 10px 50px 10px;
+
+      .profile-card-img-wrapper {
+        .profile-card-img {
+          width: 280px;
+          height: 100%;
+        }
+      }
+      .profile-card-title {
+        font-size: 60px;
+      }
+      .profile-card-subtitle {
+        font-size: 30px;
+      }
+      .profile-card-badge {
+        width: 180px;
+        height: 35px;
+      }
+    }
+    .status-card {
+      padding: 10px 50px 40px;
+      .status-primary-text {
+        font-size: 1.4rem;
+        margin: 10px 0;
+      }
+      .status-toggle {
+        --toggle-width: 70px;
+        --toggle-height: 25px;
+      }
+      .status-tabs {
+        .q-tabs__content {
+          .q-tab {
+            width: 32%;
+            height: fit-content;
+            padding: 10px;
+          }
+        }
+      }
+      .status-tabs .q-tabs__content .q-tab .q-tab__content .q-tab__label {
+        font-size: 24px;
+      }
+    }
+  }
+}
