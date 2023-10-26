@@ -1,53 +1,165 @@
-.profile-layout {
-  background: #f5f5f5;
+.app-layout {
   min-height: auto !important;
-  .profile-header {
-    background: #f5f5f5;
-    .header-toolbar {
-      margin-bottom: 85px;
-    }
-    .toggle-status,
-    .q-toggle__inner--truthy {
-      color: #b21f8a;
-    }
-    .profile-container {
-      background-image: url('/images/wave.png');
-      background-repeat: no-repeat;
-      .profile-img-wrapper {
-        width: 100%;
+
+  .profile-card {
+    padding: 72px 0 90px 89px;
+    background-image: url('/status-override/images/pattern-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .profile-card-img-wrapper {
+      .profile-card-img {
+        width: 462px;
+        height: 539px;
       }
-      .profile-work {
-        color: #969696;
+    }
+
+    .profile-card-title {
+      font-size: 96px;
+      letter-spacing: normal;
+      line-height: normal;
+      margin: 0;
+    }
+
+    .profile-card-subtitle {
+      color: rgb(128, 128, 128);
+      font-size: 40px;
+    }
+
+    .profile-card-badge {
+      width: 213px;
+      height: 47px;
+      background-color: rgba(96, 96, 96, 0.12);
+
+      .profile-card-badge-text {
+        letter-spacing: normal;
       }
     }
   }
+
   .status-card {
-    border-radius: 50px 0 0 0;
+    padding: 0px 64px 274px 63px;
+
+    .status-toggle {
+      --toggle-width: 96px;
+      --toggle-height: 48px;
+      --toggle-bg-on: #c39d52;
+      --toggle-border-on: #c39d52;
+
+      .toggle-handle-on {
+        right: unset #{'/* rtl:ignore */'};
+        left: 100% #{'/* rtl:ignore */'};
+        transform: translateX(-100%) #{'/* rtl:ignore */'};
+      }
+
+      .toggle-handle-off {
+        left: 0 #{'/* rtl:ignore */'};
+        right: unset #{'/* rtl:ignore */'};
+      }
+    }
+
     .status-tabs {
       .q-tabs__content {
         flex-wrap: wrap !important;
-        gap: 10px;
-        justify-content: center;
+        gap: 24px;
+        justify-content: start;
         .q-tab {
-          width: 157px;
-          height: 85px;
-          border-radius: 14px;
-          border: 1px solid #efefef;
-          justify-content: start;
+          width: 661px;
+          height: 214px;
+          justify-content: center;
+          border-radius: 32px;
+
+          border: double 4px transparent;
+          background-image: linear-gradient(white, white),
+            linear-gradient(
+              180deg,
+              #fff3af 0%,
+              #f4e687 8.33%,
+              #e5a21c 25.52%,
+              #eeb838 42.19%,
+              #ebda46 54.17%,
+              #fae8b4 67.19%,
+              #ffffff 75.52%,
+              #fae8b4 90.1%
+            );
+          background-origin: border-box;
+          background-clip: padding-box, border-box;
+
+          &.status-active {
+            .q-tab__label {
+              color: #fff;
+            }
+            .q-icon {
+              img {
+                filter: invert(93%) sepia(53%) saturate(2%) hue-rotate(355deg)
+                  brightness(105%) contrast(101%);
+              }
+            }
+          }
+
+          &.disabled {
+            border: 5px solid rgb(211, 211, 211);
+          }
+
           .q-tab__content {
             flex-direction: column;
-            align-items: start;
+            align-items: center;
             gap: 10px;
+            .q-tab__label {
+              font-size: 32px;
+            }
           }
         }
       }
     }
+  }
+}
 
-    .change-btn {
-      text-align: center;
-      background-color: #2e2e2e;
-      width: 210px;
-      height: 50px;
+body.screen--md,
+body.screen--lg {
+  .app-layout {
+    .profile-card {
+      padding: 10px 50px 10px;
+
+      .profile-card-img-wrapper {
+        .profile-card-img {
+          width: 280px;
+          height: 100%;
+        }
+      }
+      .profile-card-title {
+        font-size: 60px;
+      }
+      .profile-card-subtitle {
+        font-size: 30px;
+      }
+      .profile-card-badge {
+        width: 180px;
+        height: 35px;
+      }
+    }
+    .status-card {
+      padding: 10px 50px 40px;
+      .status-primary-text {
+        font-size: 1.4rem;
+        margin: 10px 0;
+      }
+      .status-toggle {
+        --toggle-width: 70px;
+        --toggle-height: 25px;
+      }
+      .status-tabs {
+        .q-tabs__content {
+          .q-tab {
+            width: 32%;
+            height: fit-content;
+            padding: 10px;
+          }
+        }
+      }
+      .status-tabs .q-tabs__content .q-tab .q-tab__content .q-tab__label {
+        font-size: 24px;
+      }
     }
   }
 }

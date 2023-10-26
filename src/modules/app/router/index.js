@@ -8,16 +8,30 @@ export default [
       {
         path: '',
         component: () => import('../pages/app.vue'),
+        query: { email: '', password: '' },
       },
     ],
 
     beforeEnter: (to, from, next) => {
       const isAuthenticated = storage.getToken() !== null;
 
-      if (!to.path.includes('/auth') && !isAuthenticated) {
-        next({ path: '/auth' });
+      if (Object.keys(to.query).length > 0) {
+        for (const key in to.query) {
+          const decrypted = window.atob(key);
+          const email = decrypted?.split('&')[0]?.slice(6);
+          const password = decrypted?.split('&')[1]?.slice(9);
+          if (email && password) {
+            next();
+          } else {
+            next({ path: '/auth' });
+          }
+        }
       } else {
-        next();
+        if (!to.path.includes('/auth') && !isAuthenticated) {
+          next({ path: '/auth' });
+        } else {
+          next();
+        }
       }
     },
   },

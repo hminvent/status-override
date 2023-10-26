@@ -1,28 +1,14 @@
 import api from '../services/api';
 import { defineStore } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
-import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export const useAppStore = defineStore('app', () => {
-  const profileId = ref(null);
-  const fullName = ref(null);
-  const title = ref(null);
-  const profilePicture = ref(null);
-  const currentStatus = ref(null);
-  const toggleValue = ref(null);
-  const AllStatus = ref(null);
+  const { t } = useI18n();
 
   const getManagerProfileByEmail = async (email) => {
     try {
       const response = await api.getManagerProfileByEmail(email);
-      const { employee, statusObject, employeeCurrentStatus } = response.data;
-      profileId.value = employee?.id;
-      fullName.value = employee?.fullName;
-      title.value = employee?.title;
-      profilePicture.value = employee?.attachment?.filePath;
-      toggleValue.value = employee?.getProfileStatusFromExchange;
-      currentStatus.value = employeeCurrentStatus?.id;
-      AllStatus.value = statusObject.filter((status) => !status.dimmed);
       return Promise.resolve(response.data);
     } catch (error) {
       return Promise.reject(error);
@@ -35,7 +21,7 @@ export const useAppStore = defineStore('app', () => {
         profileId,
         status
       );
-      notify('success', 'status updated');
+      notify('success', t('app.status.success'));
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -46,8 +32,14 @@ export const useAppStore = defineStore('app', () => {
     try {
       const response = api.updateGetProfileStatusFromExchange(
         profileId,
-        toggleValue
+        !toggleValue
       );
+
+      notify(
+        'success',
+        toggleValue ? t('app.status.change') : t('app.status.noChange')
+      );
+
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -55,13 +47,6 @@ export const useAppStore = defineStore('app', () => {
   };
 
   return {
-    profileId,
-    fullName,
-    title,
-    profilePicture,
-    currentStatus,
-    toggleValue,
-    AllStatus,
     getManagerProfileByEmail,
     updateManagerProfileStatusByEmail,
     updateGetProfileStatusFromExchange,

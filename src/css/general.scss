@@ -5,3 +5,35 @@
 .min-height-auto {
   min-height: auto !important;
 }
+
+.q-notification__message {
+  font-size: 32px;
+}
+
+@font-face {
+  font-family: 'TheSansArab';
+  font-weight: 300;
+  src: url('/status-override/fonts/TheSansArab/TheSansArab-Light.woff2');
+}
+
+@font-face {
+  font-family: 'TheSansArab';
+  font-weight: 500;
+  src: url('/status-override/fonts/TheSansArab/TheSansArab-plain.woff2');
+}
+
+@font-face {
+  font-family: 'TheSansArab';
+  font-weight: bold;
+  src: url('/status-override/fonts/TheSansArab/TheSansArab-Bold.woff2');
+}
+
+@font-face {
+  font-family: 'TheSansArab';
+  font-weight: 900;
+  src: url('/status-override/fonts/TheSansArab/TheSansArab-Black.woff2');
+}
+
+*:not(i) {
+  font-family: 'TheSansArab';
+}

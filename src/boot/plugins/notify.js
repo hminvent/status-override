@@ -4,5 +4,6 @@ export function notify(type, msg) {
   Notify.create({
     message: msg,
     type: type === 'success' ? 'positive' : 'negative',
+    timeout: 500,
   });
 }

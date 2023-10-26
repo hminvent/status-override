@@ -11,7 +11,7 @@
  * Boot files are your "main.js"
  **/
 
-import lang from 'quasar/lang/en-US'
+import lang from 'quasar/lang/ar'
 
 
 
@@ -19,5 +19,5 @@ import {Notify,Loading} from 'quasar'
 
 
 
-export default { config: {"notify":{},"loading":{}},lang,plugins: {Notify,Loading} }
+export default { config: {"screen":{"bodyClasses":true},"notify":{},"loading":{}},lang,plugins: {Notify,Loading} }
 
