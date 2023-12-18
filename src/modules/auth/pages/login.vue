@@ -2,7 +2,7 @@
   <q-layout class="login-layout" view="lhh LpR lff">
     <q-header reveal class="login-header">
       <q-toolbar class="q-mt-lg q-mb-md">
-        <img class="q-ml-auto" src="/statusOverride/images/khafji-logo.png" />
+        <img class="q-ml-auto" src="/status-override/images/khafji-logo.png" />
       </q-toolbar>
     </q-header>
 

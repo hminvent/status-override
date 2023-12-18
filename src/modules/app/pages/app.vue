@@ -4,7 +4,7 @@
       <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/khafji-logo.png"
+          src="/status-override/images/khafji-logo.png"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
@@ -139,7 +139,7 @@ const statusIcon = (statusId) => {
     return result;
   }, {});
 
-  return `img:/statusOverride/images/icons/${statusIconMapping[statusId]}`;
+  return `img:/status-override/images/icons/${statusIconMapping[statusId]}`;
 };
 
 const handleChange = () => {
