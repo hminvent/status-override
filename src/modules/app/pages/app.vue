@@ -4,7 +4,7 @@
       <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/ndf-logo.png"
+          src="/statusOverride/images/khafji-logo.png"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
