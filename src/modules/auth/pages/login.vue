@@ -2,7 +2,7 @@
   <q-layout class="login-layout" view="lhh LpR lff">
     <q-header reveal class="login-header">
       <q-toolbar class="q-mt-lg q-mb-md">
-        <img class="q-ml-auto" src="/statusOverride/images/ndf-logo.png" />
+        <img class="q-ml-auto" src="/status-override/images/ndf-logo.png" />
       </q-toolbar>
     </q-header>
 
@@ -71,7 +71,7 @@ import { ref, reactive } from 'vue';
 import { useAuthStore } from '../store';
 
 const authStore = useAuthStore();
-const { login } = authStore;
+const { ssoLogin } = authStore;
 
 const loginForm = reactive({
   email: '',
@@ -80,9 +80,12 @@ const loginForm = reactive({
 
 const isPwd = ref(true);
 
-const submit = () => {
+const submit = async () => {
   const { email, password } = loginForm;
-  login({ email, password });
+
+  if (email && password) {
+    await ssoLogin({ email, password });
+  }
 };
 </script>
 <style lang="scss">

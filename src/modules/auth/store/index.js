@@ -13,12 +13,36 @@ export const useAuthStore = defineStore('auth', () => {
 
   const { t } = useI18n();
 
+  const signIn = async (params) => {
+    try {
+      const response = await api.signIn(params);
+      storage.setToken(response.data.jwtToken);
+      storage.setRefreshToken(response.data.refreshToken);
+      getProfile();
+      return Promise.resolve(response);
+    } catch (error) {
+      notify('error', t('auth.errors.login'));
+      return Promise.reject(error);
+    }
+  };
+
   async function login(data) {
     try {
       const response = await api.login(data);
       storage.setToken(response.data.jwtToken);
       storage.setRefreshToken(response.data.refreshToken);
       getProfile();
+    } catch (error) {
+      notify('error', t('auth.errors.login'));
+      return Promise.reject(error);
+    }
+  }
+
+  async function ssoLogin(data) {
+    try {
+      const response = await api.ssoLogin(data);
+      window.location.href = response.data;
+      return Promise.resolve(response);
     } catch (error) {
       notify('error', t('auth.errors.login'));
       return Promise.reject(error);
@@ -70,5 +94,5 @@ export const useAuthStore = defineStore('auth', () => {
       return Promise.reject(error);
     }
   }
-  return { login, logout, refreshToken };
+  return { login, ssoLogin, signIn, logout, refreshToken };
 });

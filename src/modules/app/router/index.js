@@ -8,16 +8,30 @@ export default [
       {
         path: '',
         component: () => import('../pages/app.vue'),
+        query: {
+          code: '',
+          state: '',
+        },
       },
     ],
 
     beforeEnter: (to, from, next) => {
       const isAuthenticated = storage.getToken() !== null;
 
-      if (!to.path.includes('/auth') && !isAuthenticated) {
-        next({ path: '/auth' });
+      const { code, state } = to.query;
+
+      if (Object.keys(to.query).length > 0) {
+        if (code && state) {
+          next();
+        } else {
+          next({ path: '/auth' });
+        }
       } else {
-        next();
+        if (!to.path.includes('/auth') && !isAuthenticated) {
+          next({ path: '/auth' });
+        } else {
+          next();
+        }
       }
     },
   },

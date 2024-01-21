@@ -4,7 +4,7 @@
       <q-toolbar class="header-toolbar flex justify-between q-ml-sm">
         <img
           class="q-mt-md"
-          src="/statusOverride/images/ndf-logo.png"
+          src="/status-override/images/ndf-logo.png"
           alt="logo"
         />
         <q-toggle class="toggle-status" v-model="toggleValue" />
@@ -72,12 +72,18 @@ import {
 } from 'src/services/static-lookups';
 import { getCssVar } from 'quasar';
 import { useAppStore } from '../store';
+import { useAuthStore } from 'src/modules/auth/store';
 import { storeToRefs } from 'pinia';
 import { notify } from 'src/boot/plugins/notify';
+import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import storage from 'src/services/storage';
 
+const router = useRouter();
 const { t } = useI18n();
+
+const authStore = useAuthStore();
+const { signIn } = authStore;
 
 const appStore = useAppStore();
 const {
@@ -139,7 +145,7 @@ const statusIcon = (statusId) => {
     return result;
   }, {});
 
-  return `img:/statusOverride/images/icons/${statusIconMapping[statusId]}`;
+  return `img:/status-override/images/icons/${statusIconMapping[statusId]}`;
 };
 
 const handleChange = () => {
@@ -148,6 +154,27 @@ const handleChange = () => {
   } else {
     notify('error', t('app.choose'));
   }
+};
+
+const handleAutoLogin = async () => {
+  const { query } = router.currentRoute.value;
+
+  if (Object.keys(query).length > 0) {
+    const { code, state } = query;
+    if (code && state) {
+      await signIn({ code, state });
+      await init();
+    } else {
+      next({ path: '/auth' });
+    }
+  } else {
+    await init();
+  }
+};
+
+const init = async () => {
+  const email = storage.getProfile().email;
+  await getManagerProfileByEmail(email);
 };
 
 watch(
@@ -161,8 +188,7 @@ watch(
 );
 
 onMounted(() => {
-  const email = storage.getProfile().email;
-  getManagerProfileByEmail(email);
+  handleAutoLogin();
 });
 </script>
 
