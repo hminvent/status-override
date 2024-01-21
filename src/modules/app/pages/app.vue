@@ -83,7 +83,7 @@ const router = useRouter();
 const { t } = useI18n();
 
 const authStore = useAuthStore();
-const { signIn } = authStore;
+const { signIn, getProfile } = authStore;
 
 const appStore = useAppStore();
 const {
@@ -162,19 +162,23 @@ const handleAutoLogin = async () => {
   if (Object.keys(query).length > 0) {
     const { code, state } = query;
     if (code && state) {
-      await signIn({ code, state });
-      await init();
+      const signInResponse = await signIn({ code, state });
+      if (signInResponse) {
+        const profileResponse = await getProfile();
+        if (profileResponse) {
+          const email = storage.getProfile().email;
+          await getManagerProfileByEmail(email);
+        }
+      } else {
+        router.push('/auth/login');
+      }
     } else {
-      next({ path: '/auth' });
+      router.push('/auth/login');
     }
   } else {
-    await init();
+    const email = storage.getProfile().email;
+    await getManagerProfileByEmail(email);
   }
-};
-
-const init = async () => {
-  const email = storage.getProfile().email;
-  await getManagerProfileByEmail(email);
 };
 
 watch(

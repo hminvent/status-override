@@ -18,7 +18,6 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await api.signIn(params);
       storage.setToken(response.data.jwtToken);
       storage.setRefreshToken(response.data.refreshToken);
-      getProfile();
       return Promise.resolve(response);
     } catch (error) {
       notify('error', t('auth.errors.login'));
@@ -89,10 +88,11 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await api.getProfile();
       storage.setProfile(response.data);
       router.push(DEFAULT_ROUTE);
+      return Promise.resolve(response);
     } catch (error) {
       notify('error', t('auth.errors.login'));
       return Promise.reject(error);
     }
   }
-  return { login, ssoLogin, signIn, logout, refreshToken };
+  return { login, ssoLogin, signIn, logout, refreshToken, getProfile };
 });
