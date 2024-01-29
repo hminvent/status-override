@@ -16,7 +16,7 @@
                 Login
               </div>
             </q-card-section>
-            <q-card-section>
+            <!-- <q-card-section>
               <q-input
                 outlined
                 v-model="loginForm.email"
@@ -46,10 +46,10 @@
                   />
                 </template>
               </q-input>
-            </q-card-section>
-            <q-card-section>
+            </q-card-section> -->
+            <!-- <q-card-section>
               <span>forget Password?</span>
-            </q-card-section>
+            </q-card-section> -->
             <q-card-section>
               <q-btn
                 rounded
@@ -81,11 +81,12 @@ const loginForm = reactive({
 const isPwd = ref(true);
 
 const submit = async () => {
-  const { email, password } = loginForm;
-
-  if (email && password) {
-    await ssoLogin({ email, password });
-  }
+  // const { email, password } = loginForm;
+  // if (email && password) {
+  //   await ssoLogin({ email, password });
+  // }
+  window.location.href =
+    'https://sso.ndf.gov.sa/adfs//oauth2/authorize?client_id=531dd721-f593-412c-bc01-8c03cdbfaafe&response_type=code&redirect_uri=https%3A%2F%2Fnameplate.ndf.gov.sa%2Fstatus-override%2Fapp&response_mode=query&scope=openid&state=statusoverride';
 };
 </script>
 <style lang="scss">
