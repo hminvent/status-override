@@ -10,10 +10,13 @@
       <q-card-section
         class="profile-section absolute-top flex column q-pa-none"
       >
-        <div class="profile-image-wrapper flex flex-center">
+        <div
+          v-if="profilePicture"
+          class="profile-image-wrapper flex flex-center"
+        >
           <q-img
             :style="imageStyle"
-            src="/status-override/images/profile.png"
+            :src="profilePicture"
             alt="profile-image"
           />
         </div>
@@ -146,8 +149,6 @@ const statusIcon = (statusId) => {
     result[id] = iconNames[index] || ''; // Assign file name based on index, or empty string if index exceeds available icon names
     return result;
   }, {});
-
-  console.log(statusIconMapping);
 
   return `img:/status-override/images/icons/${statusIconMapping[statusId]}`;
 };
