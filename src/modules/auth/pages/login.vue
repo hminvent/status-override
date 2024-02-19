@@ -64,7 +64,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '../store';
-import { MERSVO_SSO_URL } from 'src/services/static-lookups';
+import { NDF_SSO_URL, MERSVO_SSO_URL } from 'src/services/static-lookups';
 
 const authStore = useAuthStore();
 const { ssoLogin } = authStore;
@@ -81,7 +81,7 @@ const submit = async () => {
   // if (email && password) {
   //   await ssoLogin({ email, password });
   // }
-  window.location.href = MERSVO_SSO_URL;
+  window.location.href = NDF_SSO_URL;
 };
 </script>
 <style lang="scss">
