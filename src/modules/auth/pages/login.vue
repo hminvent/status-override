@@ -1,74 +1,70 @@
 <template>
-  <q-layout class="login-layout" view="lhh LpR lff">
-    <q-header reveal class="login-header">
-      <q-toolbar class="q-mt-lg q-mb-md">
-        <img class="q-ml-auto" src="/status-override/images/ndf-logo.png" />
-      </q-toolbar>
-    </q-header>
-
-    <q-page-container>
-      <q-page class="login-card-wrapper min-height-auto">
-        <q-card flat class="login-card q-py-xl">
-          <q-form>
-            <q-card-section>
-              <div class="text-h6">welcome back</div>
-              <div class="text-login text-h5 text-uppercase text-weight-bold">
-                Login
-              </div>
-            </q-card-section>
-            <!-- <q-card-section>
-              <q-input
-                outlined
-                v-model="loginForm.email"
-                type="email"
-                :label-slot="true"
-                class="q-mb-lg"
-              >
-                <template #label>
-                  <span class="text-caption">Email</span>
-                </template>
-              </q-input>
-              <q-input
-                outlined
-                v-model="loginForm.password"
-                :type="isPwd ? 'password' : 'text'"
-                :label-slot="true"
-              >
-                <template #label>
-                  <span class="text-caption">Password</span>
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    size="xs"
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-              </q-input>
-            </q-card-section> -->
-            <!-- <q-card-section>
-              <span>forget Password?</span>
-            </q-card-section> -->
-            <q-card-section>
-              <q-btn
-                rounded
-                class="full-width submit-btn"
-                color="primary"
-                label="Login"
-                @click="submit"
+  <main class="row justify-center items-center window-height">
+    <div class="col col-xs-12 col-sm-6 col-md-4">
+      <div class="row q-mb-xl">
+        <q-img
+          class="col-xs-4 col-sm-6 col-md-12"
+          src="/status-override/images/ndf-logo.png"
+        />
+      </div>
+      <q-form class="q-px-xs-sm q-px-sm-none">
+        <div class="q-mb-md">
+          <span class="text-h5">welcome back</span>
+        </div>
+        <div class="q-mb-lg">
+          <span class="text-h4 text-primary text-uppercase">Login</span>
+        </div>
+        <!-- <div>
+          <q-input
+            outlined
+            v-model="loginForm.email"
+            type="email"
+            label-slot
+            class="q-mb-lg"
+          >
+            <template #label>
+              <span class="text-caption">Email</span>
+            </template>
+          </q-input>
+        </div>
+        <div class="q-mb-md">
+          <q-input
+            outlined
+            v-model="loginForm.password"
+            :type="isPwd ? 'password' : 'text'"
+            label-slot
+          >
+            <template #label>
+              <span class="text-caption">Password</span>
+            </template>
+            <template v-slot:append>
+              <q-icon
+                size="xs"
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
               />
-            </q-card-section>
-          </q-form>
-        </q-card>
-      </q-page>
-    </q-page-container>
-  </q-layout>
+            </template>
+          </q-input>
+        </div> -->
+        <div>
+          <q-btn
+            no-caps
+            class="full-width"
+            color="primary"
+            label="Login"
+            @click="submit"
+          />
+        </div>
+      </q-form>
+    </div>
+  </main>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '../store';
+import { MERSVO_SSO_URL } from 'src/services/static-lookups';
 
 const authStore = useAuthStore();
 const { ssoLogin } = authStore;
@@ -85,8 +81,7 @@ const submit = async () => {
   // if (email && password) {
   //   await ssoLogin({ email, password });
   // }
-  window.location.href =
-    'https://sso.ndf.gov.sa/adfs//oauth2/authorize?client_id=531dd721-f593-412c-bc01-8c03cdbfaafe&response_type=code&redirect_uri=https%3A%2F%2Fnameplate.ndf.gov.sa%2Fstatus-override%2Fapp&response_mode=query&scope=openid&state=statusoverride';
+  window.location.href = MERSVO_SSO_URL;
 };
 </script>
 <style lang="scss">

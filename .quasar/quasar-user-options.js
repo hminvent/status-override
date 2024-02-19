@@ -19,5 +19,5 @@ import {Notify,Loading} from 'quasar'
 
 
 
-export default { config: {"notify":{},"loading":{}},lang,plugins: {Notify,Loading} }
+export default { config: {"notify":{},"loading":{},"screen":{"bodyClasses":true}},lang,plugins: {Notify,Loading} }
 

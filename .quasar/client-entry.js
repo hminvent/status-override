@@ -33,6 +33,9 @@ import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/dist/quasar.sass'
 
 
+// We add Quasar addons, if they were requested
+import 'quasar/src/css/flex-addon.sass'
+
 
 
 import 'src/css/app.scss'
