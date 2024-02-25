@@ -8,6 +8,8 @@
   }
 
   .profile-card {
+    width: 90%;
+    margin: auto;
     .profile-section {
       top: -25%;
     }
@@ -52,6 +54,10 @@
   }
 }
 
+.profile-card.q-card {
+  box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.15);
+}
+
 body.screen--md {
   .profile-main .profile-card {
     .status-card .status-tabs .q-tab {
@@ -72,6 +78,7 @@ body.screen--sm {
 
 body.screen--xs {
   .profile-main .profile-card {
+    width: 100%;
     .status-card .status-tabs .q-tab {
       width: 163px;
       height: 88px;

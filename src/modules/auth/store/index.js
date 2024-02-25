@@ -37,6 +37,18 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function getToken(data) {
+    try {
+      const response = await api.getToken(data);
+      storage.setToken(response.data.jwtToken);
+      storage.setRefreshToken(response.data.refreshToken);
+      getProfile();
+    } catch (error) {
+      notify('error', t('auth.errors.login'));
+      return Promise.reject(error);
+    }
+  }
+
   async function ssoLogin(data) {
     try {
       const response = await api.ssoLogin(data);
@@ -94,5 +106,13 @@ export const useAuthStore = defineStore('auth', () => {
       return Promise.reject(error);
     }
   }
-  return { login, ssoLogin, signIn, logout, refreshToken, getProfile };
+  return {
+    login,
+    ssoLogin,
+    signIn,
+    logout,
+    refreshToken,
+    getProfile,
+    getToken,
+  };
 });

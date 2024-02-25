@@ -5,3 +5,25 @@
 .min-height-auto {
   min-height: auto !important;
 }
+
+@font-face {
+  font-family: 'Cairo';
+  font-weight: 300;
+  src: url('/fonts/Cairo/Cairo-Light.woff');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-weight: 400;
+  src: url('/fonts/Cairo/Cairo-Regular.woff');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  font-weight: 700;
+  src: url('/fonts/Cairo/Cairo-Bold.woff');
+}
+
+*:not(i) {
+  font-family: 'Cairo', sans-serif;
+}

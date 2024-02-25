@@ -48,7 +48,7 @@
             :key="status.id"
             :name="status.id"
             :icon="statusIcon(status.id)"
-            :label="status.name"
+            :label="$t(`app.${status.name}`)"
             :disable="toggleValue"
             no-caps
           />

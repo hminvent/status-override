@@ -14,7 +14,7 @@
         <div class="q-mb-lg">
           <span class="text-h4 text-primary text-uppercase">Login</span>
         </div>
-        <!-- <div>
+        <div>
           <q-input
             outlined
             v-model="loginForm.email"
@@ -46,7 +46,7 @@
               />
             </template>
           </q-input>
-        </div> -->
+        </div>
         <div>
           <q-btn
             no-caps
@@ -67,7 +67,7 @@ import { useAuthStore } from '../store';
 import { NDF_SSO_URL, MERSVO_SSO_URL } from 'src/services/static-lookups';
 
 const authStore = useAuthStore();
-const { ssoLogin } = authStore;
+const { getToken /*ssoLogin*/ } = authStore;
 
 const loginForm = reactive({
   email: '',
@@ -77,11 +77,11 @@ const loginForm = reactive({
 const isPwd = ref(true);
 
 const submit = async () => {
-  // const { email, password } = loginForm;
-  // if (email && password) {
-  //   await ssoLogin({ email, password });
-  // }
-  window.location.href = NDF_SSO_URL;
+  const { email, password } = loginForm;
+  if (email && password) {
+    await getToken({ email, password });
+  }
+  // window.location.href = NDF_SSO_URL;
 };
 </script>
 <style lang="scss">
