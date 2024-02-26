@@ -30,12 +30,12 @@ export default boot(() => {
       hideLoader();
       const status = error?.response?.status;
 
-      if (status === 401 || status === 403) {
-        // Set logout function here
-        const authStore = useAuthStore();
-        const { refreshToken } = authStore;
-        refreshToken();
-      }
+      // if (status === 401 || status === 403) {
+      //   // Set logout function here
+      //   const authStore = useAuthStore();
+      //   const { refreshToken } = authStore;
+      //   refreshToken();
+      // }
 
       return Promise.reject(error);
     }

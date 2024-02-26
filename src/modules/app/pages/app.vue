@@ -6,65 +6,67 @@
       </q-toolbar>
     </header>
 
-    <q-card class="profile-card relative-position q-py-lg q-px-md">
-      <q-card-section
-        class="profile-section absolute-top flex column q-pa-none"
-      >
-        <div
-          v-if="profilePicture"
-          class="profile-image-wrapper flex flex-center"
-        >
-          <q-img
-            :style="imageStyle"
-            :src="profilePicture"
-            alt="profile-image"
-          />
-        </div>
-        <div class="profile-desc q-mt-md flex column flex-center">
-          <span class="text-h5 text-black q-mt-sm">
-            {{ fullName }}
-          </span>
-          <span class="text-body1 q-mt-sm">
-            {{ title }}
-          </span>
-        </div>
-      </q-card-section>
+    <section class="profile-section flex column">
+      <div v-if="profilePicture" class="profile-image-wrapper flex flex-center">
+        <q-img :style="imageStyle" :src="profilePicture" alt="profile-image" />
+      </div>
 
-      <q-card-section class="q-pa-none absolute-right">
-        <q-toggle class="toggle-status" v-model="toggleValue" />
-      </q-card-section>
+      <div class="profile-desc q-mt-md flex column flex-center">
+        <span class="text-h5 text-black q-mt-sm">
+          {{ fullName }}
+        </span>
+        <span class="text-body1 q-mt-sm">
+          {{ title }}
+        </span>
+      </div>
+    </section>
 
-      <q-card-section class="status-card q-pa-none">
-        <p class="q-ma-none q-mb-md">My Status</p>
+    <section class="profile-card-container">
+      <q-card class="profile-card q-py-lg q-px-md">
+        <q-card-section class="q-pa-none absolute-right">
+          <q-toggle class="toggle-status" v-model="toggleValue" />
+        </q-card-section>
 
-        <q-tabs
-          v-model="currentStatus"
-          indicator-color="transparent"
-          :active-bg-color="activeColor"
-          class="status-tabs text-black"
-        >
-          <q-tab
-            v-for="status in AllStatus"
-            :key="status.id"
-            :name="status.id"
-            :icon="statusIcon(status.id)"
-            :label="$t(`app.${status.name}`)"
+        <q-card-section class="status-card q-pa-none">
+          <p class="q-ma-none q-mb-md">My Status</p>
+
+          <q-tabs
+            v-model="currentStatus"
+            indicator-color="transparent"
+            :active-bg-color="activeColor"
+            class="status-tabs text-black"
+          >
+            <div class="row justify-center q-gutter-md">
+              <q-tab
+                class="col-6 col-3-md"
+                v-for="status in AllStatus"
+                :key="status.id"
+                :name="status.id"
+                :icon="statusIcon(status.id)"
+                :label="$t(`app.${status.name}`)"
+                :disable="toggleValue"
+                no-caps
+              />
+            </div>
+          </q-tabs>
+        </q-card-section>
+
+        <q-card-actions class="change-btn-wrapper" vertical align="center">
+          <q-btn
+            flat
+            class="change-btn text-white bg-primary text-h5"
+            @click="handleChange"
+            label="Change"
             :disable="toggleValue"
+            :style="{
+              background: toggleValue ? '#D9D9D9 !important' : '',
+              color: toggleValue ? '#959595 !important' : '',
+            }"
             no-caps
           />
-        </q-tabs>
-      </q-card-section>
-
-      <q-card-actions vertical align="center">
-        <q-btn
-          class="change-btn text-white bg-primary text-h5"
-          @click="handleChange"
-          label="Change"
-          :disable="toggleValue"
-          no-caps
-        />
-      </q-card-actions>
-    </q-card>
+        </q-card-actions>
+      </q-card>
+    </section>
   </main>
 </template>
 

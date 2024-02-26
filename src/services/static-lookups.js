@@ -1,10 +1,10 @@
 export const colorNames = ['info', 'accent', 'secondary', 'dark'];
 
 export const shadowValues = [
-  'rgba(97, 244, 170, 0.2)',
-  'rgba(227, 84, 84, 0.2)',
-  'rgba(246, 196, 77, 0.2)',
-  'rgba(76, 126, 255, 0.2)',
+  'rgb(205, 233, 213)',
+  'rgb(239, 207, 208)',
+  'rgb(244, 244, 245)',
+  'rgb(221, 232, 238)',
 ];
 
 export const iconNames = [
